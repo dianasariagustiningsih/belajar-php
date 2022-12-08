@@ -24,9 +24,9 @@ if ($result) {
 }
 
 //5. tutup koneksi mysql
-
 mysqli_close($con);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,3 +57,7 @@ mysqli_close($con);
                 <a href="<?php echo "delete.php?id=".$value["id"]; ?>">Delete</a>
 
             </td>
+        </tr>
+        <?php endforeach; ?>
+    </body>
+    </html>
