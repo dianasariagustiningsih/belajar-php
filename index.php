@@ -1,18 +1,59 @@
 <?php
-    
-    echo "Hello World!<br>";
+//1. Buat koneksi dengan MySQL 
+Scon = mysqli_connect("localhost","root","","fakultas");
 
-    $nama = "Diana Sari Agustiningsih";
-    $umur = 21;
+//2. Cek koneksi dengan MySQL
+if(mysqli_connect_errno()){ 
+    echo "Koneksi gagal". mysqli_connect_error();
+}else{
+    echo "Koneksi berhasil";
+}
 
-    echo "Nama saya <strong>$nama</strong>, saya berusia $umur tahun.<br>";
+//3. membaca data dari tabel MySQL. 
+$query= "SELECT * FROM mahasiswa";
 
-    $namaAdik = "Ayu Maulidia";
-    $umurAdik = 15;
+//4. Tampilkan data dengan menjalankan sql query
+Sresult mysqli_query($con, $query);
+$mahasiswa = [];
+if ($result) {
+    // tampilkan data satu per satu 
+    while($row mysqli_fetch_assoc($result)) { 
+        Smahasiswa[] = $row;
+    } 
+    mysqli_free_result($result);
+}
 
-    echo "Nama adik saya <strong>$namaAdik</strong>, adik saya berusia $umueAdik tahun.<br>";
+//5. tutup koneksi mysql
 
-    $selisih = $umur - $umurAdik;
-    echo "Selisih usia saya dan adik saya adalah $elisih tahun."
-
+mysqli_close($con);
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Mahasiswa</title>
+</head>
+<body>
+    <h1>Data Mahasiswa</h1>
+    <a href="insert.php"> Tambah Data</a>
+    <?php //var_dump($mahasiswa); ?> 
+    <table border="2" style="width: 100%;">
+        <tr>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Tempat Lahir</th>
+            <th>Action</th>
+        </tr>
+        <?php foreach($mahasiswa as $value): ?>
+        <tr>
+            <td><?php echo $value["nim"]; ?></td> 
+            <td><?php echo $value["nama"]; ?></td>
+            <td><?php echo $value["tempat_lahir"]; ?></td>
+            <td>
+                <a href="<?php echo "update.php?id=".$value["id"]; ?>">Edit</a> 
+                <a href="<?php echo "delete.php?id=".$value["id"]; ?>">Delete</a>
+
+            </td>
